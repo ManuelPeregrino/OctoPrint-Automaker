@@ -23,6 +23,17 @@ class AutomakerPlugin(octoprint.plugin.SettingsPlugin,
             # put your plugin's default settings here
         }
 
+    ##~~ TemplatePlugin mixin
+
+    def get_template_configs(self):
+        return [
+            {
+                "type": "sidebar",  # Choose 'settings', 'tab', 'sidebar', etc. based on where you want the UI.
+                "name": "Automaker",
+                "template": "automaker_main.jinja2",
+                "custom_bindings": False
+            }
+        ]
     ##~~ AssetPlugin mixin
 
     def get_assets(self):
@@ -76,3 +87,4 @@ def __plugin_load__():
     __plugin_hooks__ = {
         "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
     }
+

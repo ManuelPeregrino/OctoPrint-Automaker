@@ -8,11 +8,10 @@ $(function() {
     function AutomakerViewModel(parameters) {
         var self = this;
 
-        // assign the injected parameters, e.g.:
-        // self.loginStateViewModel = parameters[0];
-        // self.settingsViewModel = parameters[1];
+        // An observable for the welcome message
+        self.welcomeMessage = ko.observable("Hello Automaker!");
 
-        // TODO: Implement your plugin's view model here.
+        // You can add more logic here if needed
     }
 
     /* view model class, parameters for constructor, container to bind to
@@ -22,8 +21,8 @@ $(function() {
     OCTOPRINT_VIEWMODELS.push({
         construct: AutomakerViewModel,
         // ViewModels your plugin depends on, e.g. loginStateViewModel, settingsViewModel, ...
-        dependencies: [ /* "loginStateViewModel", "settingsViewModel" */ ],
+        dependencies: [],
         // Elements to bind to, e.g. #settings_plugin_automaker, #tab_plugin_automaker, ...
-        elements: [ /* ... */ ]
+        elements: ["#automaker_message"]
     });
 });
