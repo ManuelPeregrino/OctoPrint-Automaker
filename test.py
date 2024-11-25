@@ -10,12 +10,71 @@ from __future__ import absolute_import
 # Take a look at the documentation on what other plugin mixins are available.
 
 import octoprint.plugin
+import pika
+import os
 
 class AutomakerPlugin(octoprint.plugin.SettingsPlugin,
     octoprint.plugin.AssetPlugin,
     octoprint.plugin.TemplatePlugin
 ):
-##~~ TemplatePlugin mixin
+
+    def __init__(self):
+        self.rabbitmq_connection = None
+        self.rabbit_mq_channel = None
+
+    def on_after_startup(self):
+        self._setup_rabbitmq()
+
+
+    def _setup_rabbitmq(self):
+        try:
+            connection_params = pika.ConnectionParameters(
+                host='localhost',
+                port=5672,
+                credentials=pika.PlainCredentials('guest', 'guest')
+            )
+            self.rabbitmq_connection = pika.BlockingConnection(connection_params)
+            self.rabbit_mq_channel = self.rabbitmq_connection.channel()
+            self.rabbit_mq_channel.queue_declare(queue='prints_queue')
+            self.logger.info('RabbitMQ connection established')
+        except Exception as e:
+            self.logger.error('Error establishing RabbitMQ connection: %s' % e)
+
+    def on_event(self, event, payload):
+        if event == 'PrintDone':
+            self._send_message_to_rabbitmq(payload['name'])
+
+    def _send_status_to_rabbitmq(self, status):
+        try:
+            hotend_temp = self._printer.get_current_temperatures()['tool0']['actual']
+            bed_temp = self._printer.get_current_temperatures()['bed']['actual']
+            message = {
+                'status': status,
+                'hotend_temp': hotend_temp,
+                'bed_temp': bed_temp
+            }
+            if self.rabbit_mq_channel:
+                exchange = "",
+                self.rabbit_mq_channel.basic_publish(exchange='', routing_key='prints_queue', body=message),               
+                self.logger.info('Message sent to RabbitMQ')
+            else:
+                self.logger.error('RabbitMQ channel not available')
+        except Exception as e:
+            self.logger.error('Error sending message to RabbitMQ: %s' % e)
+
+    def on_shutdown(self):
+        if self.rabbitmq_connection:
+            self.rabbitmq_connection.close()
+            self.logger.info('RabbitMQ connection closed')
+
+    ##~~ SettingsPlugin mixin
+
+    def get_settings_defaults(self):
+        return {
+            # put your plugin's default settings here
+        }
+
+    ##~~ TemplatePlugin mixin
 
     def get_template_configs(self):
         return [
@@ -26,13 +85,6 @@ class AutomakerPlugin(octoprint.plugin.SettingsPlugin,
                 "custom_bindings": False
             }
         ]
-    ##~~ SettingsPlugin mixin
-
-    def get_settings_defaults(self):
-        return {
-            # put your plugin's default settings here
-        }
-
     ##~~ AssetPlugin mixin
 
     def get_assets(self):
@@ -86,3 +138,4 @@ def __plugin_load__():
     __plugin_hooks__ = {
         "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
     }
+
