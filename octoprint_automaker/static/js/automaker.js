@@ -15,19 +15,56 @@ $(function () {
 
         self.login = function () {
             if (self.username() && self.password()) {
-                // Placeholder for actual login logic
-                self.isLoggedIn(true);
-                alert("Login successful!");
+                $.ajax({
+                    url: API_BASEURL + "plugin/automaker",
+                    type: "POST",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        command: "login",
+                        username: self.username(),
+                        password: self.password()
+                    }),
+                    contentType: "application/json; charset=UTF-8",
+                    success: function (response) {
+                        if (response.status === "success") {
+                            self.isLoggedIn(true);
+                            alert("Login successful!");
+                        } else {
+                            alert("Login failed: " + response.message);
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred during login.");
+                    }
+                });
             } else {
                 alert("Please enter a username and password.");
             }
         };
 
         self.logout = function () {
-            self.isLoggedIn(false);
-            self.username("");
-            self.password("");
-            alert("Logout successful");
+            $.ajax({
+                url: API_BASEURL + "plugin/automaker",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify({
+                    command: "logout"
+                }),
+                contentType: "application/json; charset=UTF-8",
+                success: function (response) {
+                    if (response.status === "success") {
+                        self.isLoggedIn(false);
+                        self.username("");
+                        self.password("");
+                        alert("Logout successful");
+                    } else {
+                        alert("Logout failed: " + response.message);
+                    }
+                },
+                error: function () {
+                    alert("An error occurred during logout.");
+                }
+            });
         };
     }
 

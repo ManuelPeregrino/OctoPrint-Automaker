@@ -107,3 +107,15 @@ attributes:
 
 **TODO**: Longer description of your plugin, configuration examples etc. This part will be visible on the page at
 http://plugins.octoprint.org/plugin/automaker/
+
+# Code Citations
+
+## License: unknown
+https://github.com/marcexplorins/plugin_octoprint/tree/18ec7da0ac11225f821ceca6f8aa7ddb869fd4d6/octoprint_nanostore/__init__.py
+
+```
+# Set the Python version your plugin is compatible with below. Recommended is Python 3 only for all new plugins.
+# OctoPrint 1.4.0 - 1.7.x run under both Python 3 and the end-of-life Python 2.
+# OctoPrint 1.8
+```
+
