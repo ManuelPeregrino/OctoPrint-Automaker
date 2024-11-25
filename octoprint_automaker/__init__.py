@@ -13,13 +13,24 @@ import octoprint.plugin
 
 class AutomakerPlugin(octoprint.plugin.BlueprintPlugin):
 
+    # Ruta para registrar los datos de login
     @octoprint.plugin.BlueprintPlugin.route("/log_user", methods=["POST"])
     def log_user(self):
         data = request.json
         username = data.get("username", "Unknown")
-        password = data.get("password", "Unknown")  # No es seguro registrar contraseñas reales
+        password = data.get("password", "Unknown")  # No almacenar ni loguear contraseñas reales
         self._logger.info(f"User login attempted: Username: {username}, Password: {password}")
         return jsonify({"status": "success", "message": "User login logged!"})
+
+    # Declarar explícitamente el estado de CSRF en el Blueprint
+    def is_blueprint_csrf_protected(self):
+        return True  # Habilitar protección CSRF
+
+    # Eximir rutas específicas de CSRF si es necesario
+    @octoprint.plugin.BlueprintPlugin.csrf_exempt
+    @octoprint.plugin.BlueprintPlugin.route("/example_unprotected", methods=["GET"])
+    def example_unprotected(self):
+        return jsonify({"message": "This route is not CSRF-protected"})
 ##~~ TemplatePlugin mixin
 
     def get_template_configs(self):
