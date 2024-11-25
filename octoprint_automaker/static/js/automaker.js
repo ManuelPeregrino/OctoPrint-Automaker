@@ -8,34 +8,40 @@ $(function() {
     function AutomakerViewModel(parameters) {
         var self = this;
 
-        // Observable para el mensaje de bienvenida
-        self.welcomeMessage = ko.observable("Hello Automaker!");
-
         // Mostrar la ventana emergente
         self.showLoginPopup = function () {
-            $("#login_popup").show();      // Mostrar la ventana emergente
-            $("#popup_overlay").show();   // Mostrar la capa de fondo
+            $("#login_popup").show();
+            $("#popup_overlay").show();
         };
 
-        // Cerrar la ventana emergente
+        // Ocultar la ventana emergente
         self.closeLoginPopup = function () {
-            $("#login_popup").hide();     // Ocultar la ventana emergente
-            $("#popup_overlay").hide();  // Ocultar la capa de fondo
+            $("#login_popup").hide();
+            $("#popup_overlay").hide();
         };
 
         // Manejar el evento de login
         self.handleLogin = function () {
-            var username = $("#username").val(); // Obtener el usuario
-            var password = $("#password").val(); // Obtener la contraseña
+            var username = $("#username").val();
+            var password = $("#password").val();
 
-            // Imprimir los datos en la consola
-            console.log("Username:", username);
-            console.log("Password:", password);
-
-            // Puedes agregar lógica futura aquí para autenticar
+            // Enviar datos al backend
+            $.ajax({
+                url: API_BASEURL + "plugin/automaker/log_user",
+                type: "POST",
+                contentType: "application/json; charset=UTF-8",
+                data: JSON.stringify({ username: username, password: password }),
+                success: function (response) {
+                    alert(response.message);  // Mostrar mensaje de éxito
+                    self.closeLoginPopup();  // Cerrar el popup
+                },
+                error: function () {
+                    alert("Failed to log user.");
+                }
+            });
         };
 
-        // Enlazar eventos a los botones después de asegurarte de que el DOM está listo
+        // Enlazar eventos
         $(document).ready(function () {
             $("#open_login_popup").on("click", self.showLoginPopup);
             $("#close_popup, #popup_overlay").on("click", self.closeLoginPopup);
@@ -46,6 +52,6 @@ $(function() {
     OCTOPRINT_VIEWMODELS.push({
         construct: AutomakerViewModel,
         dependencies: [],
-        elements: ["#automaker_message"]
+        elements: []
     });
 });

