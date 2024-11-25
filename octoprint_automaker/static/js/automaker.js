@@ -16,7 +16,7 @@ $(function () {
         self.login = function () {
             if (self.username() && self.password()) {
                 $.ajax({
-                    url: API_BASEURL + "plugin/automaker",
+                    url: API_BASEURL + "plugin/automaker/login",
                     type: "POST",
                     dataType: "json",
                     data: JSON.stringify({
