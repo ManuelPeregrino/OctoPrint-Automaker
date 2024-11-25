@@ -84,7 +84,9 @@ def __plugin_load__():
         "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
     }
 
-    global   __plugin_settings_overlay__ = dict(appearance=dict(components=dict(order=dict(tab=["plugin_automaker",
+    global __plugin_settings_overlay__ 
+    
+    __plugin_settings_overlay__ = dict(appearance=dict(components=dict(order=dict(tab=["plugin_automaker",
                                                                                        "temperature",
                                                                                        "control",
                                                                                        "gcodeviewer",
