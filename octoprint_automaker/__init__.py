@@ -18,8 +18,8 @@ class AutomakerPlugin(TemplatePlugin, AssetPlugin, SettingsPlugin):
    
     def get_template_configs(self):
         return [
-            dict(type="tab", custom_bindings=True),
-            dict(type="settings", custom_bindings=False)
+            dict(type="tab", custom_bindings=True, template="automaker_tab.jinja2"),
+            dict(type="settings", custom_bindings=True)
         ]
     
 
