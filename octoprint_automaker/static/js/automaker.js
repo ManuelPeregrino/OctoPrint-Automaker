@@ -8,21 +8,34 @@ $(function() {
     function AutomakerViewModel(parameters) {
         var self = this;
 
-        // An observable for the welcome message
-        self.welcomeMessage = ko.observable("Hello Automaker!");
+        // Mostrar la ventana emergente
+        $("#open_login_popup").click(function() {
+            $("#login_popup").show();
+            $("#popup_overlay").show();
+        });
 
-        // You can add more logic here if needed
+        // Cerrar la ventana emergente
+        $("#close_popup, #popup_overlay").click(function() {
+            $("#login_popup").hide();
+            $("#popup_overlay").hide();
+        });
+
+        // Manejar el evento del botón de login
+        $("#login_button").click(function() {
+            var username = $("#username").val();
+            var password = $("#password").val();
+
+            // Por ahora, solo imprime los datos en la consola
+            console.log("Username:", username);
+            console.log("Password:", password);
+
+            // Lógica futura: enviar datos al servidor para autenticación
+        });
     }
 
-    /* view model class, parameters for constructor, container to bind to
-     * Please see http://docs.octoprint.org/en/master/plugins/viewmodels.html#registering-custom-viewmodels for more details
-     * and a full list of the available options.
-     */
     OCTOPRINT_VIEWMODELS.push({
         construct: AutomakerViewModel,
-        // ViewModels your plugin depends on, e.g. loginStateViewModel, settingsViewModel, ...
         dependencies: [],
-        // Elements to bind to, e.g. #settings_plugin_automaker, #tab_plugin_automaker, ...
-        elements: ["#automaker_message"]
+        elements: ["#automaker_container"]
     });
 });
