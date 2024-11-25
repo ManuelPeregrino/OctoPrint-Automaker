@@ -17,13 +17,10 @@ class AutomakerPlugin(TemplatePlugin, AssetPlugin, SettingsPlugin):
      self._logger.info("Hello Maker!")
    
     def get_template_configs(self):
-        return {
-                "type": "tab",
-                "name": "My Plugin",
-                "template": "myplugin_tab.jinja2",
-                "div": "tab_myplugin",
-                "icon": "icon-cog"
-        }
+        return [
+            dict(type="tab", custom_bindings=True),
+            dict(type="settings", custom_bindings=False)
+        ]
     
 
     ##~~ SettingsPlugin mixin
@@ -31,7 +28,7 @@ class AutomakerPlugin(TemplatePlugin, AssetPlugin, SettingsPlugin):
     def get_settings_defaults(self):
         return {
             # put your plugin's default settings here
-
+            
         }
 
     ##~~ AssetPlugin mixin

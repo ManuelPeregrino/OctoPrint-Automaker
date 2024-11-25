@@ -1,4 +1,4 @@
-<div id="automaker_custom_tab" data-bind="ifnot: isLoggedIn">
+<div id="automaker_plugin_custom_tab" data-bind="ifnot: isLoggedIn">
     <h2>Login</h2>
     <form data-bind="submit: login">
         <div>
@@ -12,7 +12,7 @@
         <button type="submit">Login</button>
     </form>
 </div>
-<div id="automaker_custom_tab_logged_in" data-bind="if: isLoggedIn">
+<div id="automaker_plugin_custom_tab_logged_in" data-bind="if: isLoggedIn">
     <h2>Welcome!</h2>
     <form data-bind="submit: logout">
     <p>Logged in as: <span data-bind="text: username"></span></p>
