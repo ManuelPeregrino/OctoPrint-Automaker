@@ -13,10 +13,15 @@ import octoprint.plugin
 from octoprint.plugin import TemplatePlugin, AssetPlugin, SettingsPlugin
 
 class AutomakerPlugin(TemplatePlugin, AssetPlugin, SettingsPlugin):
+    def on_after_startup(self):
+     self._logger.info("Hello Maker!")
+   
     def get_template_configs(self):
         return [
-            dict(type="tab", name="Automaker", template="automaker_main.jinja2", custom_bindings=True)
+            dict(type="navbar", name="Automaker", template="automaker_main.jinja2", custom_bindings=True)
         ]
+    
+
     ##~~ SettingsPlugin mixin
 
     def get_settings_defaults(self):
