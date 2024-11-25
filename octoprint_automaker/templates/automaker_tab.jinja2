@@ -1,20 +1,4 @@
-<div id="automaker_plugin_custom_tab" data-bind="ifnot: isLoggedIn">
-    <h2>Login</h2>
-    <form data-bind="submit: login">
-        <div>
-            <label for="username">Username:</label>
-            <input id="username" type="text" data-bind="value: username" />
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input id="password" type="password" data-bind="value: password" />
-        </div>
-        <button type="submit">Login</button>
-    </form>
-</div>
-<div id="automaker_plugin_custom_tab_logged_in" data-bind="if: isLoggedIn">
-    <h2>Welcome!</h2>
-    <form data-bind="submit: logout">
-    <p>Logged in as: <span data-bind="text: username"></span></p>
-    <button type="submit">Logout</button>
+<div id="automaker_plugin_custom_tab">
+    <h2>Monitor Printer</h2>
+    <button data-bind="click: monitorPrinter">Start Monitoring</button>
 </div>
