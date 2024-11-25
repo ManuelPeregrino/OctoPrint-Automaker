@@ -139,3 +139,4 @@ def __plugin_load__():
         "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
     }
 
+, name="Automaker", template="automaker_tab.jinja2", custom_bindings=True
