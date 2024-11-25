@@ -4,7 +4,7 @@ $(function() {
 
         self.monitorPrinter = function() {
             $.ajax({
-                url: "http://localhost:8000/default/monitor_printer_monitor__post",
+                url: "http://localhost:8000/default/monitor/",
                 type: "POST",
                 dataType: "json",
                 data: JSON.stringify({
