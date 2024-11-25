@@ -4,54 +4,34 @@
  * Author: Manuel Alejandro Peregrino Clemente
  * License: AGPLv3
  */
-$(function() {
+$(function () {
     function AutomakerViewModel(parameters) {
         var self = this;
 
-        // Mostrar la ventana emergente
-        self.showLoginPopup = function () {
-            $("#login_popup").show();
-            $("#popup_overlay").show();
+        self.username = ko.observable("");
+        self.password = ko.observable("");
+        self.isLoggedIn = ko.observable(false);
+
+        self.login = function () {
+            if (self.username() && self.password()) {
+                // Placeholder for actual login logic
+                self.isLoggedIn(true);
+                alert("Login successful!");
+            } else {
+                alert("Please enter a username and password.");
+            }
         };
 
-        // Ocultar la ventana emergente
-        self.closeLoginPopup = function () {
-            $("#login_popup").hide();
-            $("#popup_overlay").hide();
+        self.logout = function () {
+            self.isLoggedIn(false);
+            self.username("");
+            self.password("");
         };
-
-        // Manejar el evento de login
-        self.handleLogin = function () {
-            var username = $("#username").val();
-            var password = $("#password").val();
-
-            // Enviar datos al backend
-            $.ajax({
-                url: API_BASEURL + "plugin/automaker/log_user",
-                type: "POST",
-                contentType: "application/json; charset=UTF-8",
-                data: JSON.stringify({ username: username, password: password }),
-                success: function (response) {
-                    alert(response.message);  // Mostrar mensaje de éxito
-                    self.closeLoginPopup();  // Cerrar el popup
-                },
-                error: function () {
-                    alert("Failed to log user.");
-                }
-            });
-        };
-
-        // Enlazar eventos
-        $(document).ready(function () {
-            $("#open_login_popup").on("click", self.showLoginPopup);
-            $("#close_popup, #popup_overlay").on("click", self.closeLoginPopup);
-            $("#login_button").on("click", self.handleLogin);
-        });
     }
 
     OCTOPRINT_VIEWMODELS.push({
         construct: AutomakerViewModel,
         dependencies: [],
-        elements: []
+        elements: ["#automaker_plugin_custom_tab"]
     });
 });

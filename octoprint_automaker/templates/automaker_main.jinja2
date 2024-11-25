@@ -1,22 +1,19 @@
-<!DOCTYPE html>
-<!-- Botón en el sidebar -->
-<div id="sidebar_plugin_automaker" style="margin: 10px;">
-    <button id="open_login_popup" style="padding: 10px 20px; font-size: 16px;">Iniciar Sesión</button>
+<div id="automaker_plugin_custom_tab" data-bind="ifnot: isLoggedIn">
+    <h2>Login</h2>
+    <form data-bind="submit: login">
+        <div>
+            <label for="username">Username:</label>
+            <input id="username" type="text" data-bind="value: username" />
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input id="password" type="password" data-bind="value: password" />
+        </div>
+        <button type="submit">Login</button>
+    </form>
 </div>
-
-<!-- Ventana emergente -->
-<div id="login_popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-                             width: 300px; padding: 20px; background: white; border: 1px solid #ccc; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); z-index: 1000;">
-    <h3>Iniciar Sesión</h3>
-    <label for="username">Usuario:</label><br>
-    <input type="text" id="username" placeholder="Ingrese usuario" style="width: 100%; padding: 5px; margin-bottom: 10px;"><br>
-    
-    <label for="password">Contraseña:</label><br>
-    <input type="password" id="password" placeholder="Ingrese contraseña" style="width: 100%; padding: 5px; margin-bottom: 10px;"><br>
-
-    <button id="login_button" style="padding: 10px 20px; margin-right: 10px;">Iniciar Sesión</button>
-    <button id="close_popup" style="padding: 10px 20px;">Cerrar</button>
+<div id="automaker_plugin_custom_tab_logged_in" data-bind="if: isLoggedIn">
+    <h2>Welcome!</h2>
+    <p>Logged in as: <span data-bind="text: username"></span></p>
+    <button data-bind="click: logout">Logout</button>
 </div>
-
-<!-- Fondo opaco para cerrar al hacer clic fuera -->
-<div id="popup_overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999;"></div>

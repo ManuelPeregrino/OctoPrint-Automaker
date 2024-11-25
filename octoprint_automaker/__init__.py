@@ -1,6 +1,6 @@
 # coding=utf-8
 from __future__ import absolute_import
-from flask import request, jsonify
+
 ### (Don't forget to remove me)
 # This is a basic skeleton for your plugin's __init__.py. You probably want to adjust the class name of your plugin
 # as well as the plugin mixins it's subclassing from. This is really just a basic skeleton to get you started,
@@ -10,37 +10,12 @@ from flask import request, jsonify
 # Take a look at the documentation on what other plugin mixins are available.
 
 import octoprint.plugin
+from octoprint.plugin import TemplatePlugin, AssetPlugin, SettingsPlugin
 
-class AutomakerPlugin(octoprint.plugin.BlueprintPlugin):
-
-    # Ruta para registrar los datos de login
-    @octoprint.plugin.BlueprintPlugin.route("/log_user", methods=["POST"])
-    def log_user(self):
-        data = request.json
-        username = data.get("username", "Unknown")
-        password = data.get("password", "Unknown")  # No almacenar ni loguear contraseñas reales
-        self._logger.info(f"User login attempted: Username: {username}, Password: {password}")
-        return jsonify({"status": "success", "message": "User login logged!"})
-
-    # Declarar explícitamente el estado de CSRF en el Blueprint
-    def is_blueprint_csrf_protected(self):
-        return True  # Habilitar protección CSRF
-
-    # Eximir rutas específicas de CSRF si es necesario
-    @octoprint.plugin.BlueprintPlugin.csrf_exempt
-    @octoprint.plugin.BlueprintPlugin.route("/example_unprotected", methods=["GET"])
-    def example_unprotected(self):
-        return jsonify({"message": "This route is not CSRF-protected"})
-##~~ TemplatePlugin mixin
-
+class AutomakerPlugin(TemplatePlugin, AssetPlugin, SettingsPlugin):
     def get_template_configs(self):
         return [
-            {
-                "type": "sidebar",  # Choose 'settings', 'tab', 'sidebar', etc. based on where you want the UI.
-                "name": "Automaker",
-                "template": "automaker_main.jinja2",
-                "custom_bindings": False
-            }
+            dict(type="tab", name="Automaker", template="automaker_main.jinja2", custom_bindings=True)
         ]
     ##~~ SettingsPlugin mixin
 
