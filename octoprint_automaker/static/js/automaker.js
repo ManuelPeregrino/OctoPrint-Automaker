@@ -11,6 +11,7 @@ $(function () {
         self.username = ko.observable("");
         self.password = ko.observable("");
         self.isLoggedIn = ko.observable(false);
+        self.settings = parameters[0];
 
         self.login = function () {
             if (self.username() && self.password()) {
@@ -26,12 +27,13 @@ $(function () {
             self.isLoggedIn(false);
             self.username("");
             self.password("");
+            alert("Logout successful");
         };
     }
 
     OCTOPRINT_VIEWMODELS.push({
         construct: AutomakerViewModel,
-        dependencies: [],
+        dependencies: ["settingsViewModel"],
         elements: ["#automaker_plugin_custom_tab"]
     });
 });
