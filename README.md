@@ -15,3 +15,5 @@ the plugin manager.
 ## Configuration
 
 **TODO:** Describe your plugin's configuration options (if any).
+
+Something funny about this project. I have to commit every change in order to see instant changes on the frontend. Quite tedious but works...

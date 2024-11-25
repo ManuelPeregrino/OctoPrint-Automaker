@@ -33,6 +33,6 @@ $(function () {
 
     OCTOPRINT_VIEWMODELS.push({
         construct: AutomakerViewModel,
-        elements: ["#automaker_custom_tab"]
+        elements: ["#automaker_plugin_custom_tab"]
     });
 });
